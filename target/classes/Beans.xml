@@ -104,6 +104,9 @@
 
 	<aop:config>
 		<aop:aspect id="log" ref="logging">
+			<!-- https://www.baeldung.com/spring-aop-pointcut-tutorial ______________ 
+				https://docs.spring.io/spring/docs/5.1.3.RELEASE/spring-framework-reference/core.html#aop-api 
+				https://www.eclipse.org/aspectj/doc/next/progguide/quick.html -->
 			<aop:pointcut id="selectAll"
 				expression="execution(* com.springdemo.*.*(..))" />
 
@@ -120,12 +123,36 @@
 	<bean id="logging" class="com.springdemo.Logging" />
 
 	<!-- Definition for student bean -->
-	<bean id="student" class="com.springdemo.Student">
+	<bean id="student" class="com.springdemo.dao.Student">
 		<property name="name" value="Zara" />
 		<property name="age" value="11" />
 	</bean>
 
+	<!-- ***************************************************************************** 
+		****************** DATASOURCE DEFINITION FOR Spring JDBC ********************* 
+		************************************************************************** -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<!-- <property name="driverClassName" -->
+		<!-- value="com.mysql.jdbc.Driver" /> -->
+		<!-- Because of the error ________________________________________________________ 
+			Caused by: java.sql.SQLException: The server time zone value 'Paris, Madrid' 
+			is unrecognized or represents more than one time zone. You must configure 
+			either the server or JDBC driver (via the serverTimezone configuration property) 
+			to use a more specifc time zone value if you want to utilize time zone support. 
+			We must add this line to the database url _____________________________________ 
+			?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC -->
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/springdemo?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+		<!-- <property name="sessionTimeZone" value="GMT-3" /> -->
+	</bean>
 
-
+	<!-- Definition for studentJDBCTemplate bean -->
+	<bean id="studentJDBCTemplate"
+		class="com.springdemo.dao.StudentJDBCTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
 
 </beans>
