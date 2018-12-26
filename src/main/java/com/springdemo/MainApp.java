@@ -3,30 +3,52 @@ package com.springdemo;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import com.springdemo.beanslifecycle.CustomEventBean;
 import com.springdemo.dao.Student;
 import com.springdemo.dao.StudentJDBCTemplate;
+import com.springdemo.model.Address;
+import com.springdemo.model.Customer;
+import com.springdemo.service.CustomerManager;
+import com.springdemo.service.CustomerManagerImpl;
 
 public class MainApp {
 
 	public static void main(String[] args) {
-		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
-		((ConfigurableApplicationContext) context).start();
-		((ConfigurableApplicationContext) context).stop();
+//		ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+//		((ConfigurableApplicationContext) context).start();
+//		((ConfigurableApplicationContext) context).stop();
+//
+//		helloWorldExample(context);
+//		encapsulatedBeanExample(context);
+//		collectionsInConfigurationFileExample(context);
+//		customEventExample(context);
+//		aopFeatureExample(context);
+//		springJDBCExample(context);
+//
+//		// Closing the context
+//		((AbstractApplicationContext) context).registerShutdownHook();
 
-		helloWorldExample(context);
-		encapsulatedBeanExample(context);
-		collectionsInConfigurationFileExample(context);
-		customEventExample(context);
-		aopFeatureExample(context);
-		springJDBCExample(context);
+		ApplicationContext context = new ClassPathXmlApplicationContext("springtx.xml");
+		CustomerManager customerManager = context.getBean("customerManager", CustomerManagerImpl.class);
 
-		// Closing the context
-		((AbstractApplicationContext) context).registerShutdownHook();
+		Customer cust = createDummyCustomer();
+		customerManager.createCustomer(cust);
+
+	}
+
+	private static Customer createDummyCustomer() {
+		Customer customer = new Customer();
+		customer.setId(2);
+		customer.setName("Pierre");
+		Address address = new Address();
+		address.setId(2);
+		address.setCountry("France");
+		// setting value more than 20 chars, so that SQLException occurs
+		address.setAddress("120, rue de saire - 76160 la vieux-rue");
+		customer.setAddress(address);
+		return customer;
 	}
 
 	/**

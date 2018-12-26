@@ -146,6 +146,12 @@
 			<artifactId>commons-dbcp2</artifactId>
 			<version>2.5.0</version>
 		</dependency>
+		<!-- Spring JDBC and MySQL Driver -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${spring-framework.version}</version>
+		</dependency>
 
 
 
