@@ -15,11 +15,11 @@ public class StudentJDBCTemplate implements StudentDAO {
 		this.jdbcTemplateObject = new JdbcTemplate(dataSource);
 	}
 
-	public void create(String name, Integer age) {
+	public int create(String name, Integer age) {
 		String SQL = "insert into Student (name, age) values (?, ?)";
-		jdbcTemplateObject.update(SQL, name, age);
+		int returnedInt = jdbcTemplateObject.update(SQL, name, age);
 		System.out.println("Created Record Name = " + name + " Age = " + age);
-		return;
+		return returnedInt;
 	}
 
 	public Student getStudent(Integer id) {
@@ -46,6 +46,13 @@ public class StudentJDBCTemplate implements StudentDAO {
 		String SQL = "update Student set age = ? where id = ?";
 		jdbcTemplateObject.update(SQL, age, id);
 		System.out.println("Updated Record with ID = " + id);
+		return;
+	}
+
+	public void deleteAll() {
+		String SQL = "delete from Student";
+		jdbcTemplateObject.update(SQL);
+		System.out.println("Deleted Records");
 		return;
 	}
 }

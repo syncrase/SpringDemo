@@ -115,8 +115,9 @@
 			<aop:after-returning pointcut-ref="selectAll"
 				returning="retVal" method="afterReturningAdvice" />
 
+			<!-- Doesn't work. There's only the student's method which print something -->
 			<aop:after-throwing pointcut-ref="selectAll"
-				throwing="ex" method="AfterThrowingAdvice" />
+				throwing="ex" method="afterThrowingAdvice" />
 		</aop:aspect>
 	</aop:config>
 	<!-- Definition for logging aspect -->
@@ -141,7 +142,9 @@
 			either the server or JDBC driver (via the serverTimezone configuration property) 
 			to use a more specifc time zone value if you want to utilize time zone support. 
 			We must add this line to the database url _____________________________________ 
-			?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC -->
+			?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC 
+			cf. the official documentation Connector/J : _________________________________ 
+			https://dev.mysql.com/doc/connector-j/5.1/en/connector-j-reference-configuration-properties.html#connector-j-reference-set-config -->
 		<property name="url"
 			value="jdbc:mysql://localhost:3306/springdemo?useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC" />
 		<property name="username" value="root" />

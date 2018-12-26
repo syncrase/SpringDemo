@@ -30,7 +30,7 @@ public class Student {
 	}
 
 	public void printThrowException() {
-		System.out.println("Exception raised");
-		throw new IllegalArgumentException();
+		System.out.println("Exception raised from Student::printThrowException()");
+		throw new IllegalArgumentException("This is a test of throwing an Exception");
 	}
 }

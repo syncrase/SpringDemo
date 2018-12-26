@@ -14,7 +14,7 @@ public interface StudentDAO {
 	/**
 	 * This is the method to be used to create a record in the Student table.
 	 */
-	public void create(String name, Integer age);
+	public int create(String name, Integer age);
 
 	/**
 	 * This is the method to be used to list down a record from the Student table

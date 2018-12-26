@@ -92,7 +92,11 @@ public class MainApp {
 		Student student = (Student) context.getBean("student");
 		student.getName();
 		student.getAge();
-		student.printThrowException();
+		try {
+			student.printThrowException();
+		} catch (Exception e) {
+			System.out.println(e.getClass().getSimpleName() + " - " + e.getMessage());
+		}
 	}
 
 	/**
@@ -122,14 +126,17 @@ public class MainApp {
 		}
 		System.out.println(sb.toString());
 
-		System.out.println("----Updating Record with ID = 2 -----");
-		studentJDBCTemplate.update(2, 20);
+		int id = students.get(students.size() - 1).getId();
+		System.out.println(String.format("----Updating Record with ID = %d -----", id));
+		studentJDBCTemplate.update(id, 20);
 
-		System.out.println("----Listing Record with ID = 2 -----");
-		Student student = studentJDBCTemplate.getStudent(2);
+		System.out.println(String.format("----Listing Record with ID = %d -----", id));
+		Student student = studentJDBCTemplate.getStudent(id);
 		System.out.print("ID : " + student.getId());
 		System.out.print(", Name : " + student.getName());
 		System.out.println(", Age : " + student.getAge());
+
+		studentJDBCTemplate.deleteAll();
 	}
 
 }

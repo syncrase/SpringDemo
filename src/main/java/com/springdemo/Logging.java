@@ -33,7 +33,7 @@ public class Logging {
 	 * This is the method which I would like to execute if there is an exception
 	 * raised.
 	 */
-	public void AfterThrowingAdvice(IllegalArgumentException ex) {
+	public void afterThrowingAdvice(IllegalArgumentException ex) {
 		System.out.println("AfterThrowingAdvice: " + ex.toString());
 	}
 }
