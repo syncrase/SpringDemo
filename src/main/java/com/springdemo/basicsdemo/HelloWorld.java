@@ -1,4 +1,4 @@
-package com.springdemo;
+package com.springdemo.basicsdemo;
 
 public class HelloWorld {
 	private String message = "";

@@ -3,13 +3,19 @@ package com.springdemo;
 import java.util.List;
 
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.springdemo.basicsdemo.HelloWorld;
+import com.springdemo.basicsdemo.OutterClass;
+import com.springdemo.basicsdemo.PassedDataFormat;
 import com.springdemo.beanslifecycle.CustomEventBean;
+import com.springdemo.dao.PersonDAO;
 import com.springdemo.dao.Student;
 import com.springdemo.dao.StudentJDBCTemplate;
 import com.springdemo.model.Address;
 import com.springdemo.model.Customer;
+import com.springdemo.model.Person;
 import com.springdemo.service.CustomerManager;
 import com.springdemo.service.CustomerManagerImpl;
 
@@ -30,15 +36,37 @@ public class MainApp {
 //		// Closing the context
 //		((AbstractApplicationContext) context).registerShutdownHook();
 
-		ApplicationContext context = new ClassPathXmlApplicationContext("springtx.xml");
-		CustomerManager customerManager = context.getBean("customerManager", CustomerManagerImpl.class);
+//		springTransactionExample();
 
-		Customer cust = createDummyCustomer();
-		customerManager.createCustomer(cust);
+		ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("springhibernate.xml");
+
+		PersonDAO personDAO = context.getBean(PersonDAO.class);
+
+		Person person = new Person();
+		person.setName("Pierre");
+		person.setCountry("France");
+
+		personDAO.save(person);
+
+		System.out.println("Person::" + person);
+
+		List<Person> list = personDAO.list();
+
+		for (Person p : list) {
+			System.out.println("Person List::" + p);
+		}
+		// close resources
+		context.close();
 
 	}
 
-	private static Customer createDummyCustomer() {
+	/**
+	 * 
+	 */
+	private static void springTransactionExample() {
+		ApplicationContext context = new ClassPathXmlApplicationContext("springtx.xml");
+		CustomerManager customerManager = context.getBean("customerManager", CustomerManagerImpl.class);
+
 		Customer customer = new Customer();
 		customer.setId(2);
 		customer.setName("Pierre");
@@ -48,7 +76,9 @@ public class MainApp {
 		// setting value more than 20 chars, so that SQLException occurs
 		address.setAddress("120, rue de saire - 76160 la vieux-rue");
 		customer.setAddress(address);
-		return customer;
+		customerManager.createCustomer(customer);
+
+		((AbstractApplicationContext) context).registerShutdownHook();
 	}
 
 	/**

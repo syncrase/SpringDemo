@@ -1,4 +1,4 @@
-package com.springdemo;
+package com.springdemo.basicsdemo;
 
 import java.util.List;
 import java.util.Map;

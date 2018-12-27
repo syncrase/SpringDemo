@@ -18,6 +18,8 @@ public class PersonDAOImpl implements PersonDAO {
 
 	@Override
 	public void save(Person p) {
+		// using Hibernate session transaction management. But we can also use Spring
+		// declarative transaction management using @Transactional annotation
 		Session session = this.sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		session.persist(p);
